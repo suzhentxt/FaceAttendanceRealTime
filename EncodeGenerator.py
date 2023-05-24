@@ -29,11 +29,7 @@ for path in pathList:
     blob = bucket.blob(fileName)
     blob.upload_from_filename(fileName)
 
-
-    # print(path)
-    # print(os.path.splitext(path)[0])
 print(studentIds)
-
 
 def findEncodings(imagesList):
     encodeList = []
@@ -43,7 +39,6 @@ def findEncodings(imagesList):
         encodeList.append(encode)
 
     return encodeList
-
 
 print("Encoding Started ...")
 encodeListKnown = findEncodings(imgList)

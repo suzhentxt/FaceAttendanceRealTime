@@ -1,6 +1,5 @@
 import os
 import pickle
-import numpy as np
 import cv2
 import face_recognition
 import cvzone
@@ -31,7 +30,6 @@ modePathList = os.listdir(folderModePath)
 imgModeList = []
 for path in modePathList:
     imgModeList.append(cv2.imread(os.path.join(folderModePath, path)))
-# print(len(imgModeList))
 
 # Load the encoding file
 print("Loading Encode File ...")
@@ -65,15 +63,10 @@ while True:
         for encodeFace, faceLoc in zip(encodeCurFrame, faceCurFrame):
             matches = face_recognition.compare_faces(encodeListKnown, encodeFace)
             faceDis = face_recognition.face_distance(encodeListKnown, encodeFace)
-            # print("matches", matches)
-            # print("faceDis", faceDis)
 
             matchIndex = np.argmin(faceDis)
-            # print("Match Index", matchIndex)
 
             if matches[matchIndex]:
-                # print("Known Face Detected")
-                # print(studentIds[matchIndex])
                 y1, x2, y2, x1 = faceLoc
                 y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
                 bbox = 55 + x1, 162 + y1, x2 - x1, y2 - y1
@@ -122,7 +115,7 @@ while True:
                 if counter <= 10:
                     cv2.putText(imgBackground, str(studentInfo['total_attendance']), (861, 125),
                                 cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 1)
-                    cv2.putText(imgBackground, str(studentInfo['major']), (1006, 550),
+                    cv2.putText(imgBackground, str(studentInfo['class']), (1006, 550),
                                 cv2.FONT_HERSHEY_COMPLEX, 0.5, (255, 255, 255), 1)
                     cv2.putText(imgBackground, str(id), (1006, 493),
                                 cv2.FONT_HERSHEY_COMPLEX, 0.5, (255, 255, 255), 1)
@@ -153,6 +146,6 @@ while True:
     else:
         modeType = 0
         counter = 0
-    # cv2.imshow("Webcam", img)
+
     cv2.imshow("Face Attendance", imgBackground)
     cv2.waitKey(1)
